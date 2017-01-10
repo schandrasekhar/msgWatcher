@@ -1,0 +1,52 @@
+Logging system
+
+A bg process listens to log directory events
+
+Int lineNumberSent = 0;
+
+listenForFileWriteEvent = function() {
+	sendMsg();
+}
+
+sendMsg = function() {
+	var msg = fileRead(lineNumberSent+1);
+	var channel = fileName;
+	if (msg) {
+		sendMsgToChannel(msg);
+		lineNumberSent++;
+		sendMsg();
+	}
+}
+
+sendMsgToChannel = function(msg) {
+	sendToKafkaServer(msg)
+}
+
+Kafka Server
+	3 log storage clients which are 3 Kafka clients
+	channels (different applications) on which the client will listen on for msg (log data)
+	each client based on the specific channel will append to the respective file and save in the respective directory
+	client can save all the incoming traffic from the server in a hash map (or use queue data structure here) where the key is the line number in the received message
+	another process in the client machine can pick key value pairs from this hash map and append to file
+
+Number of machines needed (for my setup)
+2 Kafka consumers
+2 Kafka servers (not sure about this, this really should be distributed)
+
+Limitations
+Not sure if any possible deadlocks exist in this system ???
+How will the bg process know event which itself has created ??? (Looks like inotify does not provide information about the process which was responsible for the event)
+	sol: watch for only write events, the process will create read events only
+What limitations does Kafka have here
+When to do zipping when file becomes too large
+When should the hashMap be rest ??
+How will line numbers be handled when a new log file is created on the app server and/or the log server
+
+Code Architecture Setup
+3 packages will be needed for this application to fully work
+msgWatcher  (for now in python, this might be in C for performance ??)
+msgSubscriber (for now in Java, might be in something else that might have less overhead)
+msgBroker  (for now in Java, might be in something else that might have less overhead)
+msgPublisher  (for now in Java, might be in something else that might have less overhead)
+
+End users will access one of the client machines for data analysis
