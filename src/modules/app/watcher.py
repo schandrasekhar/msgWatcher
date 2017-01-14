@@ -44,7 +44,7 @@ class Watcher(object):
 
 class Logger(object):
     """docstring for Logger"""
-    def __init__(self, arg):
+    def __init__(self):
         super(Logger, self).__init__()
         self.arg = arg
     def onLog(self, eventObj):
