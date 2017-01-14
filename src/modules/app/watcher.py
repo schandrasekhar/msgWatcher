@@ -42,9 +42,19 @@ class Watcher(object):
         self._bind(self)
         return self._notifier
 
+class Logger(object):
+    """docstring for Logger"""
+    def __init__(self, arg):
+        super(Logger, self).__init__()
+        self.arg = arg
+    def onLog(self, eventObj):
+        print(eventObj)
+
+
 path = "/tmp"
-event = IN_MODIFY
+event = pyinotify.IN_MODIFY
 watcher = Watcher(path, event)
 notifier = watcher.getNotifier()
-notifier.loop(callback=callback)
+logger = Logger()
+notifier.loop(callback=logger.onLog)
 
