@@ -39,7 +39,7 @@ class Watcher(object):
         wm = pyinotify.WatchManager()
         self._wm = wm
         self._notifier = pyinotify.Notifier(self._wm)
-        self._bind(self)
+        self._bind()
         return self._notifier
 
 class Logger(object):
