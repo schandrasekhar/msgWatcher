@@ -1,9 +1,9 @@
-path = "/tmp"
-event = pyinotify.IN_MODIFY
-watcher = Watcher(path, event)
-notifier = watcher.getNotifier()
-logger = LogManager()
-notifier.loop(callback=logger.onLog)
+#path = "/tmp"
+# event = pyinotify.IN_MODIFY
+# watcher = Watcher(path, event)
+# notifier = watcher.getNotifier()
+# logger = LogManager()
+# notifier.loop(callback=logger.onLog)
 
 
 #usecase for single file
@@ -28,3 +28,10 @@ notifier.loop(callback=logger.onLog)
 #1.listen for IN_MODIFY events on given directory
 #2.put all events in queue
 #3.pop from queue and give event object to msgGetter
+
+
+#functionality to get a line from file
+path = "/tmp/trial"
+with open(path) as f:
+    content = f.readlines()
+print(content)

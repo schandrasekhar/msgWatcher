@@ -47,6 +47,6 @@ Code Architecture Setup
 msgWatcher  (for now in python, this might be in C for performance ??)
 msgSubscriber (for now in Java, might be in something else that might have less overhead)
 msgBroker  (for now in Java, might be in something else that might have less overhead)
-msgPublisher  (for now in Java, might be in something else that might have less overhead)
+msgPublisher  (for now this will be part of msgWatcher repo which is currently in python)
 
 End users will access one of the client machines for data analysis
